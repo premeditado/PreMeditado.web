@@ -1,0 +1,1496 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>PreMeditado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&display=swap">
+
+<style>
+/* ══════════════════════════════════════
+   TOKENS
+══════════════════════════════════════ */
+:root {
+  --azul:        #315A7D;
+  --azul-mid:    #3d6e97;
+  --azul-lite:   #DCE8EF;
+  --beige:       #EDE3D3;
+  --beige-lite:  #FAF8F3;
+  --negro:       #202124;
+  --texto:       #4a4a4e;
+  --texto-lite:  #7a7a80;
+  --linea:       rgba(49,90,125,0.12);
+  --r:           5px;
+  --r-lg:        10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --azul:       #4a7fa8;
+    --azul-mid:   #5a90b8;
+    --azul-lite:  #4a80b5;
+    --beige:      #28231e;
+    --beige-lite: #1c1915;
+    --negro:      #ede8e0;
+    --texto:      #b5ad9f;
+    --texto-lite: #7a7267;
+    --linea:      rgba(255,255,255,0.08);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --azul:       #4a7fa8;
+  --azul-mid:   #5a90b8;
+  --azul-lite:  #4a80b5;
+  --beige:      #28231e;
+  --beige-lite: #1c1915;
+  --negro:      #ede8e0;
+  --texto:      #b5ad9f;
+  --texto-lite: #7a7267;
+  --linea:      rgba(255,255,255,0.08);
+  color-scheme: dark;
+}
+
+/* ══════════════════════════════════════
+   BASE
+══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+html { scroll-behavior: smooth }
+body {
+  font-family: 'Manrope', system-ui, sans-serif;
+  background: var(--beige-lite);
+  color: var(--negro);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none }
+img { max-width: 100% }
+
+.wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ══════════════════════════════════════
+   ANIMACIONES
+══════════════════════════════════════ */
+.up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .65s cubic-bezier(.22,1,.36,1), transform .65s cubic-bezier(.22,1,.36,1);
+}
+.up.in { opacity: 1; transform: translateY(0) }
+.d1 { transition-delay: .08s }
+.d2 { transition-delay: .16s }
+.d3 { transition-delay: .24s }
+.d4 { transition-delay: .32s }
+.d5 { transition-delay: .40s }
+
+/* ══════════════════════════════════════
+   NAVEGACIÓN
+══════════════════════════════════════ */
+#nav {
+  position: fixed;
+  top: env(safe-area-inset-top,0);
+  left: 0; right: 0;
+  z-index: 200;
+  background: rgba(250,248,243,.97);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 var(--linea);
+  transition: box-shadow .3s;
+}
+@media (prefers-color-scheme: dark) {
+  #nav { background: rgba(22,26,30,.97) }
+}
+:root[data-theme="dark"] #nav { background: rgba(22,26,30,.97) }
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.brand {
+  font-size: .95rem;
+  font-weight: 300;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--azul);
+}
+.brand b { font-weight: 800; color: var(--azul) }
+.nav-links {
+  display: flex; gap: 32px; list-style: none;
+}
+.nav-links a {
+  font-size: .82rem; font-weight: 500; letter-spacing: .03em;
+  color: var(--texto); transition: color .2s;
+}
+.nav-links a:hover { color: var(--azul) }
+.nav-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px;
+  background: var(--azul); color: var(--beige);
+  font-size: .82rem; font-weight: 700;
+  border-radius: var(--r);
+  transition: background .2s, transform .15s;
+}
+.nav-btn:hover { background: var(--azul-mid); transform: translateY(-1px) }
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+#hero {
+  min-height: 100svh;
+  background: var(--azul);
+  display: flex; align-items: center;
+  padding: 120px 0 80px;
+  position: relative; overflow: hidden;
+}
+/* texture */
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 60%, rgba(42,85,128,.35) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 70% at 0% 100%, rgba(49,90,125,.7) 0%, transparent 55%);
+  pointer-events: none;
+}
+/* grid lines */
+#hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(233,221,200,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(233,221,200,.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.hero-grid {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 64px;
+  align-items: center;
+}
+.hero-lede {
+  font-size: .75rem; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(233,221,200,.45);
+  margin-bottom: 20px;
+}
+.hero-h1 {
+  font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--beige);
+  text-wrap: balance;
+  margin-bottom: 22px;
+}
+.hero-h1 em {
+  font-style: normal;
+  color: rgba(233,221,200,.4);
+}
+.hero-p {
+  font-size: 1rem;
+  color: rgba(233,221,200,.65);
+  max-width: 400px;
+  line-height: 1.75;
+  margin-bottom: 44px;
+}
+.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap }
+.cta-fill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px;
+  background: var(--beige); color: var(--azul);
+  font-weight: 700; font-size: .88rem; border-radius: var(--r);
+  transition: background .2s, transform .15s;
+}
+.cta-fill:hover { background: #f2e8d2; transform: translateY(-2px) }
+.cta-fill .arr { transition: transform .2s }
+.cta-fill:hover .arr { transform: translateX(3px) }
+.cta-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px;
+  border: 1.5px solid rgba(233,221,200,.22);
+  color: rgba(233,221,200,.75);
+  font-weight: 600; font-size: .88rem; border-radius: var(--r);
+  transition: border-color .2s, color .2s;
+}
+.cta-ghost:hover { border-color: rgba(233,221,200,.55); color: var(--beige) }
+
+/* ─── CHAT WIDGET (hero) ─── */
+.hero-widget {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(233,221,200,.14);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  position: relative;
+}
+.widget-bar {
+  background: rgba(255,255,255,.07);
+  border-bottom: 1px solid rgba(233,221,200,.08);
+  padding: 14px 18px;
+  display: flex; align-items: center; gap: 12px;
+}
+.wbar-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34,197,94,.5);
+}
+.wbar-name {
+  font-size: .8rem; font-weight: 700;
+  color: rgba(233,221,200,.7);
+}
+.wbar-status {
+  font-size: .72rem; color: rgba(233,221,200,.35);
+}
+.wbar-badge {
+  margin-left: auto;
+  font-size: .65rem; font-weight: 700; letter-spacing: .08em;
+  padding: 3px 8px;
+  background: rgba(34,197,94,.15);
+  border: 1px solid rgba(34,197,94,.3);
+  border-radius: 20px;
+  color: #4ade80;
+}
+.widget-body { padding: 20px 18px; display: flex; flex-direction: column; gap: 12px }
+.msg {
+  display: flex; align-items: flex-end; gap: 10px;
+}
+.msg.out { flex-direction: row-reverse }
+.msg-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(233,221,200,.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .72rem; flex-shrink: 0;
+}
+.msg-bubble {
+  max-width: 75%;
+  padding: 9px 14px;
+  border-radius: 12px;
+  font-size: .82rem; line-height: 1.5;
+}
+.msg.in .msg-bubble {
+  background: rgba(255,255,255,.1);
+  color: rgba(233,221,200,.8);
+  border-bottom-left-radius: 3px;
+}
+.msg.out .msg-bubble {
+  background: rgba(233,221,200,.18);
+  color: rgba(233,221,200,.9);
+  border-bottom-right-radius: 3px;
+}
+.msg-time {
+  font-size: .65rem; color: rgba(233,221,200,.25);
+  white-space: nowrap;
+}
+.widget-typing {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 18px 18px;
+}
+.typing-label {
+  font-size: .72rem; color: rgba(233,221,200,.3);
+}
+.typing-dots { display: flex; gap: 4px }
+.typing-dots span {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(233,221,200,.25);
+  animation: blink 1.4s ease-in-out infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: .2s }
+.typing-dots span:nth-child(3) { animation-delay: .4s }
+@keyframes blink {
+  0%,80%,100% { opacity: .25 }
+  40% { opacity: .9 }
+}
+.widget-footer {
+  border-top: 1px solid rgba(233,221,200,.08);
+  padding: 12px 18px;
+  display: flex; align-items: center; gap: 10px;
+}
+.widget-input {
+  flex: 1;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(233,221,200,.1);
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: .78rem; color: rgba(233,221,200,.35);
+  font-family: inherit;
+}
+.widget-send {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(233,221,200,.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem;
+}
+
+/* ══════════════════════════════════════
+   EL PROBLEMA — "¿Te suena?"
+══════════════════════════════════════ */
+#problema {
+  background: var(--beige-lite);
+  padding: 110px 0;
+}
+.sec-label {
+  font-size: .7rem; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--azul); margin-bottom: 14px;
+  display: block;
+}
+.sec-h2 {
+  font-size: clamp(1.9rem, 3.8vw, 3rem);
+  font-weight: 800; line-height: 1.12;
+  text-wrap: balance; margin-bottom: 16px;
+}
+.sec-p {
+  font-size: 1rem; color: var(--texto);
+  max-width: 540px; line-height: 1.78; margin-bottom: 56px;
+}
+/* Tape-style problem cards */
+.prob-tape {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.prob-item {
+  border: 1px solid var(--linea);
+  border-radius: var(--r-lg);
+  padding: 28px 24px;
+  background: var(--beige-lite);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+.prob-item::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--azul); transform: scaleX(0);
+  transform-origin: left; transition: transform .3s cubic-bezier(.22,1,.36,1);
+}
+.prob-item:hover { border-color: rgba(49,90,125,.2); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(49,90,125,.1) }
+.prob-item:hover::before { transform: scaleX(1) }
+.prob-n {
+  font-size: .65rem; font-weight: 800; letter-spacing: .16em;
+  color: rgba(49,90,125,.2); margin-bottom: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.prob-titulo {
+  font-size: .95rem; font-weight: 700; margin-bottom: 8px;
+}
+.prob-texto {
+  font-size: .84rem; color: var(--texto); line-height: 1.6;
+}
+
+/* ══════════════════════════════════════
+   SERVICIOS — PIPELINE VISUAL
+══════════════════════════════════════ */
+#servicios {
+  background: var(--azul);
+  padding: 110px 0;
+  color: var(--beige);
+}
+#servicios .sec-label { color: rgba(233,221,200,.4) }
+#servicios .sec-h2 { color: var(--beige) }
+#servicios .sec-p { color: rgba(233,221,200,.6); margin-bottom: 72px }
+
+.pipeline {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr 40px 1fr;
+  gap: 0;
+  align-items: start;
+}
+.pipe-arrow {
+  display: flex; align-items: flex-start;
+  padding-top: 60px;
+  justify-content: center;
+}
+.pipe-arrow svg {
+  opacity: .25; width: 24px;
+}
+.pipe-col {
+  border: 1px solid rgba(233,221,200,.1);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: border-color .25s;
+}
+.pipe-col:hover { border-color: rgba(233,221,200,.22) }
+.pipe-head {
+  padding: 28px 26px 22px;
+  border-bottom: 1px solid rgba(233,221,200,.08);
+}
+.pipe-num {
+  font-size: .65rem; font-weight: 800; letter-spacing: .18em;
+  color: rgba(233,221,200,.3); margin-bottom: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.pipe-title {
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--beige); margin-bottom: 8px;
+}
+.pipe-sub {
+  font-size: .82rem; color: rgba(233,221,200,.5);
+  line-height: 1.55;
+}
+.pipe-items {
+  padding: 20px 26px 26px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.pipe-item {
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.pipe-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(233,221,200,.25);
+  margin-top: 7px; flex-shrink: 0;
+}
+.pipe-item-text {
+  font-size: .81rem; color: rgba(233,221,200,.5);
+  line-height: 1.5;
+}
+.pipe-tag {
+  margin: 0 26px 20px;
+  display: inline-block;
+  font-size: .62rem; font-weight: 700; letter-spacing: .1em;
+  padding: 4px 10px;
+  border: 1px solid rgba(233,221,200,.15);
+  border-radius: 20px;
+  color: rgba(233,221,200,.35);
+}
+
+/* ══════════════════════════════════════
+   ANTES / PREMEDITADO
+══════════════════════════════════════ */
+#comparacion {
+  background: var(--beige);
+  padding: 110px 0;
+}
+.comp-header {
+  text-align: center;
+  max-width: 580px; margin: 0 auto 72px;
+}
+.comp-wrap {
+  display: grid;
+  grid-template-columns: 1fr 52px 1fr;
+  gap: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 40px rgba(49,90,125,.1);
+}
+.comp-col { display: flex; flex-direction: column }
+.comp-col.antes { background: #fff }
+.comp-col.despues { background: var(--azul) }
+.comp-head {
+  padding: 28px 36px 20px;
+  border-bottom: 1px solid;
+  display: flex; align-items: center; gap: 12px;
+}
+.antes .comp-head { border-color: rgba(49,90,125,.08) }
+.despues .comp-head { border-color: rgba(233,221,200,.1) }
+.comp-head-label {
+  font-size: .68rem; font-weight: 800; letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.antes .comp-head-label { color: rgba(49,90,125,.35) }
+.despues .comp-head-label { color: rgba(233,221,200,.4) }
+.comp-head-badge {
+  font-size: .65rem; font-weight: 700;
+  padding: 3px 9px; border-radius: 20px;
+  margin-left: auto;
+}
+.antes .comp-head-badge {
+  background: rgba(49,90,125,.06);
+  color: rgba(49,90,125,.4);
+  border: 1px solid rgba(49,90,125,.1);
+}
+.despues .comp-head-badge {
+  background: rgba(233,221,200,.1);
+  color: rgba(233,221,200,.5);
+  border: 1px solid rgba(233,221,200,.15);
+}
+.comp-steps { padding: 28px 36px; flex: 1; display: flex; flex-direction: column; gap: 0 }
+.comp-step {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px dashed;
+  position: relative;
+}
+.comp-step:last-child { border-bottom: none }
+.antes .comp-step { border-color: rgba(49,90,125,.06) }
+.despues .comp-step { border-color: rgba(233,221,200,.07) }
+.cstep-circle {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .68rem; font-weight: 700;
+  flex-shrink: 0; margin-top: 1px;
+}
+.antes .cstep-circle {
+  background: rgba(49,90,125,.07);
+  color: rgba(49,90,125,.4);
+}
+.despues .cstep-circle {
+  background: rgba(233,221,200,.12);
+  color: rgba(233,221,200,.6);
+}
+.cstep-body {}
+.cstep-t {
+  font-size: .86rem; font-weight: 600; margin-bottom: 2px;
+  line-height: 1.3;
+}
+.antes .cstep-t { color: var(--negro) }
+.despues .cstep-t { color: rgba(233,221,200,.88) }
+.cstep-s {
+  font-size: .78rem; line-height: 1.45;
+}
+.antes .cstep-s { color: var(--texto) }
+.despues .cstep-s { color: rgba(233,221,200,.45) }
+/* warning / ok chip */
+.cstep-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: .66rem; font-weight: 700;
+  padding: 2px 8px; border-radius: 10px; margin-top: 5px;
+}
+.chip-warn { background: rgba(200,80,60,.08); color: rgba(180,60,40,.7) }
+.chip-ok { background: rgba(40,160,80,.1); color: rgba(30,140,60,.8) }
+
+.comp-stat {
+  padding: 22px 36px 28px;
+  border-top: 1px solid;
+  display: flex; align-items: baseline; gap: 10px;
+}
+.antes .comp-stat { border-color: rgba(49,90,125,.08) }
+.despues .comp-stat { border-color: rgba(233,221,200,.1) }
+.stat-big {
+  font-size: 2.4rem; font-weight: 900; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.antes .stat-big { color: rgba(49,90,125,.25) }
+.despues .stat-big { color: rgba(233,221,200,.85) }
+.stat-desc { font-size: .82rem; line-height: 1.4 }
+.antes .stat-desc { color: var(--texto) }
+.despues .stat-desc { color: rgba(233,221,200,.45) }
+
+/* DIVIDER */
+.comp-mid {
+  display: flex; align-items: center; justify-content: center;
+  background: var(--beige);
+  position: relative;
+}
+.comp-vs {
+  position: sticky; top: 50%;
+  width: 44px; height: 44px;
+  background: var(--beige);
+  border: 1.5px solid rgba(49,90,125,.14);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .65rem; font-weight: 800; letter-spacing: .04em;
+  color: rgba(49,90,125,.5);
+  box-shadow: 0 2px 12px rgba(49,90,125,.08);
+}
+
+/* ══════════════════════════════════════
+   ENFOQUE — SECCIÓN TRANSVERSAL
+══════════════════════════════════════ */
+#enfoque {
+  background: var(--beige-lite);
+  padding: 110px 0;
+}
+.enfoque-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.enfoque-text .sec-p { margin-bottom: 0 }
+
+/* Diagnostic card */
+.diag-card {
+  border: 1px solid var(--linea);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: 0 6px 40px rgba(49,90,125,.07);
+}
+.diag-head {
+  background: var(--azul);
+  padding: 20px 24px;
+  display: flex; align-items: center; gap: 10px;
+}
+.diag-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(233,221,200,.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .95rem;
+}
+.diag-head-text {}
+.diag-head-title {
+  font-size: .85rem; font-weight: 700; color: var(--beige);
+}
+.diag-head-sub {
+  font-size: .72rem; color: rgba(233,221,200,.4);
+}
+.diag-body { background: var(--beige-lite); padding: 0 }
+.diag-row {
+  display: flex; align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--linea);
+  gap: 12px;
+  min-height: 54px;
+  transition: background .15s;
+}
+.diag-row:last-child { border-bottom: none }
+.diag-row:hover { background: rgba(49,90,125,.03) }
+.diag-row-icon {
+  width: 30px; height: 30px; border-radius: 6px;
+  background: rgba(49,90,125,.06);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; flex-shrink: 0;
+}
+.diag-row-body { flex: 1; min-width: 0 }
+.diag-row-label {
+  font-size: .82rem; font-weight: 600; color: var(--negro);
+}
+.diag-row-sub {
+  font-size: .74rem; color: var(--texto); margin-top: 1px;
+}
+.diag-bar-wrap {
+  width: 80px; flex-shrink: 0;
+}
+.diag-bar-track {
+  height: 5px; background: rgba(49,90,125,.08);
+  border-radius: 3px; overflow: hidden;
+}
+.diag-bar-fill {
+  height: 100%; border-radius: 3px;
+  background: var(--azul);
+}
+.diag-row-val {
+  font-size: .75rem; font-weight: 700; color: var(--azul);
+  margin-top: 3px; text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.diag-footer {
+  background: var(--azul);
+  padding: 18px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.diag-footer-text {
+  font-size: .8rem; color: rgba(233,221,200,.6);
+}
+.diag-footer-btn {
+  font-size: .78rem; font-weight: 700;
+  padding: 7px 16px;
+  background: rgba(233,221,200,.12);
+  border: 1px solid rgba(233,221,200,.18);
+  color: rgba(233,221,200,.7);
+  border-radius: var(--r);
+  transition: background .2s;
+}
+.diag-footer-btn:hover { background: rgba(233,221,200,.2) }
+
+/* Bullets below the text */
+.enfoque-bullets {
+  margin-top: 36px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.e-bullet {
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.e-bullet-icon {
+  width: 32px; height: 32px; border-radius: 7px;
+  background: rgba(49,90,125,.07);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; flex-shrink: 0; margin-top: 1px;
+}
+.e-bullet-body {}
+.e-bullet-t { font-size: .9rem; font-weight: 700; margin-bottom: 2px }
+.e-bullet-s { font-size: .82rem; color: var(--texto); line-height: 1.55 }
+
+/* ══════════════════════════════════════
+   PROCESO
+══════════════════════════════════════ */
+#proceso {
+  background: var(--azul);
+  padding: 110px 0;
+  color: var(--beige);
+}
+#proceso .sec-label { color: rgba(233,221,200,.38) }
+#proceso .sec-h2 { color: var(--beige) }
+#proceso .sec-p { color: rgba(233,221,200,.55); margin-bottom: 64px }
+.proceso-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  position: relative;
+  gap: 0;
+}
+/* connecting line */
+.proceso-track::before {
+  content: '';
+  position: absolute;
+  top: 28px; left: calc(12.5% + 14px); right: calc(12.5% + 14px);
+  height: 1px;
+  background: linear-gradient(to right, rgba(233,221,200,.15) 0%, rgba(233,221,200,.15) 100%);
+  z-index: 0;
+}
+.proceso-step {
+  padding: 0 20px;
+  position: relative; z-index: 1;
+}
+.pstep-num-wrap {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(233,221,200,.15);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px;
+  font-size: .72rem; font-weight: 800; letter-spacing: .1em;
+  color: rgba(233,221,200,.5);
+  font-variant-numeric: tabular-nums;
+  transition: background .2s, border-color .2s;
+}
+.proceso-step:hover .pstep-num-wrap {
+  background: rgba(255,255,255,.1);
+  border-color: rgba(233,221,200,.3);
+}
+.pstep-title {
+  font-size: .98rem; font-weight: 700;
+  color: var(--beige); margin-bottom: 10px;
+}
+.pstep-desc {
+  font-size: .82rem; color: rgba(233,221,200,.48);
+  line-height: 1.65;
+}
+.pstep-detail {
+  margin-top: 16px;
+  display: flex; align-items: center; gap: 6px;
+  font-size: .72rem; font-weight: 600;
+  color: rgba(233,221,200,.28);
+}
+.pstep-detail::before {
+  content: '';
+  width: 14px; height: 1px;
+  background: rgba(233,221,200,.2);
+}
+
+/* ══════════════════════════════════════
+   WEB
+══════════════════════════════════════ */
+#web {
+  background: var(--beige-lite);
+  padding: 110px 0;
+}
+.web-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.web-features {
+  margin-top: 36px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+.wfeat {
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.wfeat-icon {
+  width: 38px; height: 38px; border-radius: 8px;
+  background: rgba(49,90,125,.07);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem; flex-shrink: 0; margin-top: 2px;
+  transition: background .2s;
+}
+.wfeat:hover .wfeat-icon { background: rgba(49,90,125,.13) }
+.wfeat-t { font-size: .9rem; font-weight: 700; margin-bottom: 3px }
+.wfeat-s { font-size: .82rem; color: var(--texto); line-height: 1.55 }
+
+/* Browser mockup */
+.bmock {
+  background: var(--azul);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(49,90,125,.18);
+}
+.bmock-bar {
+  background: rgba(255,255,255,.07);
+  border-bottom: 1px solid rgba(233,221,200,.07);
+  padding: 11px 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.bmock-dots { display: flex; gap: 5px }
+.bmock-dots span {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(255,255,255,.13);
+}
+.bmock-url {
+  flex: 1; background: rgba(255,255,255,.07);
+  border-radius: 4px; padding: 4px 10px;
+  font-size: .7rem; color: rgba(233,221,200,.35);
+  font-family: monospace;
+}
+.bmock-body { padding: 24px 20px }
+.bm-hero-area {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(233,221,200,.07);
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 14px;
+}
+.bm-line {
+  height: 7px; border-radius: 4px;
+  background: rgba(233,221,200,.14);
+  margin-bottom: 7px;
+}
+.bm-line.w65 { width: 65% }
+.bm-line.w45 { width: 45%; height: 5px; opacity: .6 }
+.bm-line.w80 { width: 80%; height: 5px; opacity: .4; margin-top: 10px }
+.bm-buttons {
+  display: flex; gap: 7px; margin-top: 14px;
+}
+.bm-btn { height: 26px; border-radius: 4px; background: rgba(233,221,200,.22); width: 90px }
+.bm-btn.ghost { background: transparent; border: 1px solid rgba(233,221,200,.14); width: 70px }
+.bm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px }
+.bm-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(233,221,200,.06);
+  border-radius: 5px; padding: 10px;
+}
+.bm-card-dot { width: 18px; height: 18px; border-radius: 4px; background: rgba(233,221,200,.1); margin-bottom: 7px }
+.bm-card-l { height: 4px; border-radius: 3px; background: rgba(233,221,200,.09); margin-bottom: 4px }
+.bm-card-l.s { width: 55% }
+/* Animated cursor */
+.bm-cursor {
+  width: 10px; height: 14px;
+  background: rgba(233,221,200,.6);
+  border-radius: 1px;
+  position: absolute;
+  animation: cursor-blink .9s step-end infinite;
+  display: inline-block;
+}
+@keyframes cursor-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ══════════════════════════════════════
+   CTA FINAL
+══════════════════════════════════════ */
+#final {
+  background: var(--azul);
+  padding: 130px 0;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+#final::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(233,221,200,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(233,221,200,.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.final-inner {
+  position: relative; z-index: 1;
+  max-width: 680px; margin: 0 auto;
+}
+.final-lede {
+  font-size: .7rem; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(233,221,200,.35); margin-bottom: 22px;
+}
+.final-h2 {
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  font-weight: 900; line-height: 1.1;
+  color: var(--beige); text-wrap: balance;
+  margin-bottom: 18px;
+}
+.final-p {
+  font-size: .98rem; color: rgba(233,221,200,.55);
+  max-width: 440px; margin: 0 auto 48px;
+  line-height: 1.72;
+}
+.final-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap }
+.final-note {
+  margin-top: 32px;
+  font-size: .78rem; color: rgba(233,221,200,.28);
+  letter-spacing: .02em;
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer {
+  background: #1a2d3e;
+  padding: 52px 0 28px;
+  color: rgba(233,221,200,.35);
+}
+.foot-top {
+  display: flex;
+  justify-content: space-between; align-items: flex-start;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(233,221,200,.07);
+  margin-bottom: 24px;
+  gap: 32px;
+}
+.foot-brand {
+  font-size: .9rem; font-weight: 300;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(233,221,200,.75); margin-bottom: 6px;
+}
+.foot-brand b { font-weight: 800; color: rgba(233,221,200,1) }
+.foot-tagline { font-size: .8rem }
+.foot-links {
+  display: flex; gap: 24px; list-style: none;
+  flex-wrap: wrap; align-items: center;
+}
+.foot-links a {
+  font-size: .8rem; transition: color .2s;
+}
+.foot-links a:hover { color: rgba(233,221,200,.7) }
+.foot-copy { font-size: .75rem }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 48px }
+  .hero-widget { max-width: 500px }
+  .pipeline { grid-template-columns: 1fr; gap: 16px }
+  .pipe-arrow { display: none }
+  .comp-wrap { grid-template-columns: 1fr }
+  .comp-mid { display: none }
+  .comp-col.antes { border-bottom: 3px solid var(--beige) }
+  .comp-steps { padding: 20px 24px }
+  .comp-head { padding: 20px 24px 16px }
+  .comp-stat { padding: 16px 24px 20px }
+  .enfoque-grid { grid-template-columns: 1fr; gap: 48px }
+  .proceso-track { grid-template-columns: 1fr 1fr; gap: 32px }
+  .proceso-track::before { display: none }
+  .web-grid { grid-template-columns: 1fr; gap: 44px }
+  .prob-tape { grid-template-columns: repeat(2, 1fr) }
+  .foot-top { flex-direction: column; gap: 24px }
+  .nav-links { display: none }
+}
+@media (max-width: 600px) {
+  .prob-tape { grid-template-columns: 1fr }
+  .proceso-track { grid-template-columns: 1fr }
+  .hero-ctas { flex-direction: column }
+  .final-btns { flex-direction: column; align-items: center }
+  .hero-h1 { font-size: 2.2rem }
+}
+</style>
+
+<!-- ══════════════════════════════════ NAV -->
+<nav id="nav">
+  <div class="wrap">
+    <div class="nav-row">
+      <a href="#" class="brand">PREMEDITADO</a>
+      <ul class="nav-links">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#comparacion">Diferencia</a></li>
+        <li><a href="#proceso">Proceso</a></li>
+        <li><a href="#web">Web</a></li>
+      </ul>
+      <a href="mailto:hola@premeditado.es" class="nav-btn">Hablemos →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════ HERO -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="up">
+        <p class="hero-lede">Digitalización y automatización para negocios</p>
+        <h1 class="hero-h1">Tu negocio no descansa.<br><em>Tú sí.</em></h1>
+        <p class="hero-p">Detectamos las tareas que te hacen perder tiempo y creamos sistemas para que funcionen sin depender de ti.</p>
+        <div class="hero-ctas">
+          <a href="mailto:hola@premeditado.es" class="cta-fill">Cuéntanos tu proyecto <span class="arr">→</span></a>
+          <a href="#servicios" class="cta-ghost">Ver cómo funciona</a>
+        </div>
+      </div>
+
+      <!-- chat widget simulado -->
+      <div class="up d2">
+        <div class="hero-widget">
+          <div class="widget-bar">
+            <div class="wbar-dot"></div>
+            <div>
+              <div class="wbar-name">PreMeditado · Asistente</div>
+              <div class="wbar-status">WhatsApp Business · Activo</div>
+            </div>
+            <span class="wbar-badge">EN LÍNEA</span>
+          </div>
+          <div class="widget-body">
+            <div class="msg in">
+              <div class="msg-avatar">👤</div>
+              <div>
+                <div class="msg-bubble">Hola, ¿tenéis hueco este viernes?</div>
+              </div>
+              <div class="msg-time">21:47</div>
+            </div>
+            <div class="msg out">
+              <div class="msg-avatar">⚙️</div>
+              <div>
+                <div class="msg-bubble">¡Hola! Claro, tenemos disponibilidad el viernes. ¿Por la mañana o tarde?</div>
+              </div>
+              <div class="msg-time">21:47</div>
+            </div>
+            <div class="msg in">
+              <div class="msg-avatar">👤</div>
+              <div>
+                <div class="msg-bubble">Por la mañana mejor, sobre las 10</div>
+              </div>
+              <div class="msg-time">21:49</div>
+            </div>
+            <div class="msg out">
+              <div class="msg-avatar">⚙️</div>
+              <div>
+                <div class="msg-bubble">Perfecto, te apunto el viernes a las 10:00. Te llega confirmación ahora mismo 📅</div>
+              </div>
+              <div class="msg-time">21:49</div>
+            </div>
+          </div>
+          <div class="widget-typing">
+            <span class="typing-label">Recordatorio programado para el jueves</span>
+            <div class="typing-dots"><span></span><span></span><span></span></div>
+          </div>
+          <div class="widget-footer">
+            <div class="widget-input">Escribe un mensaje…</div>
+            <div class="widget-send">↑</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ PROBLEMA -->
+<section id="problema">
+  <div class="wrap">
+    <span class="sec-label up">El contexto</span>
+    <h2 class="sec-h2 up">¿Cuánto tiempo pierdes<br>haciendo cosas que no deberías?</h2>
+    <p class="sec-p up">La mayoría de negocios locales tienen los mismos agujeros. No es falta de ganas. Es falta de sistema.</p>
+    <div class="prob-tape">
+      <div class="prob-item up"><div class="prob-n">01</div><div class="prob-titulo">Mensajes sin responder</div><div class="prob-texto">Un cliente escribe un domingo a las 10 de la noche. El lunes ya ha ido a la competencia.</div></div>
+      <div class="prob-item up d1"><div class="prob-n">02</div><div class="prob-titulo">Agenda gestionada a mano</div><div class="prob-texto">Llamadas de ida y vuelta, cancelaciones de última hora, huecos vacíos que nadie ve.</div></div>
+      <div class="prob-item up d2"><div class="prob-n">03</div><div class="prob-titulo">Sin rastro de los clientes</div><div class="prob-texto">El historial está en la cabeza del dueño, en papeles o en conversaciones de WhatsApp.</div></div>
+      <div class="prob-item up d1"><div class="prob-n">04</div><div class="prob-titulo">Recordatorios que no llegan</div><div class="prob-texto">Los clientes no aparecen porque nadie les avisó. El hueco se pierde y el dinero también.</div></div>
+      <div class="prob-item up d2"><div class="prob-n">05</div><div class="prob-titulo">Presupuestos que se pierden</div><div class="prob-texto">Un cliente pide precio, queda apuntado para después y después nunca llega.</div></div>
+      <div class="prob-item up d3"><div class="prob-n">06</div><div class="prob-titulo">El negocio cierra contigo</div><div class="prob-texto">Cuando no estás, no hay respuesta. El negocio solo funciona si tú estás dentro.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ SERVICIOS — PIPELINE -->
+<section id="servicios">
+  <div class="wrap">
+    <span class="sec-label up">Servicios</span>
+    <h2 class="sec-h2 up">Convertimos tareas repetitivas<br>en sistemas que trabajan solos.</h2>
+    <p class="sec-p up">No son piezas sueltas. Están pensados para funcionar juntos: la automatización como base, la inteligencia donde tiene sentido y la web como puerta de entrada conectada a todo.</p>
+
+    <div class="pipeline">
+      <!-- 01 -->
+      <div class="pipe-col up">
+        <div class="pipe-head">
+          <div class="pipe-num">01</div>
+          <div class="pipe-title">Automatización</div>
+          <div class="pipe-sub">La base del sistema. Gestionamos mensajes, citas, recordatorios y seguimientos para que ocurran solos.</div>
+        </div>
+        <div class="pipe-items">
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">Respuesta automática en WhatsApp e Instagram</div></div>
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">Gestión de citas y agenda sin llamadas</div></div>
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">Recordatorios automáticos a clientes</div></div>
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">CRM sencillo con historial de cada cliente</div></div>
+        </div>
+        <span class="pipe-tag">NÚCLEO</span>
+      </div>
+
+      <!-- arrow -->
+      <div class="pipe-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(233,221,200,.3)"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+
+      <!-- 02 -->
+      <div class="pipe-col up d2">
+        <div class="pipe-head">
+          <div class="pipe-num">02</div>
+          <div class="pipe-title">Inteligencia artificial</div>
+          <div class="pipe-sub">Se añade cuando realmente aporta valor. Entiende preguntas, responde con la información de tu negocio y decide cuándo hace falta una persona.</div>
+        </div>
+        <div class="pipe-items">
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">Responde preguntas sobre servicios y precios</div></div>
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">Recomienda según lo que el cliente pide</div></div>
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">Deriva al profesional solo cuando hace falta</div></div>
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">Aprende del histórico de tu negocio</div></div>
+        </div>
+        <span class="pipe-tag">COMPLEMENTARIO</span>
+      </div>
+
+      <!-- arrow -->
+      <div class="pipe-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(233,221,200,.3)"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+
+      <!-- 03 -->
+      <div class="pipe-col up d4">
+        <div class="pipe-head">
+          <div class="pipe-num">03</div>
+          <div class="pipe-title">Web</div>
+          <div class="pipe-sub">Una pieza más del sistema. Capta contactos, resuelve dudas, facilita reservas y se conecta con todo lo demás.</div>
+        </div>
+        <div class="pipe-items">
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">Diseño limpio adaptado a tu negocio</div></div>
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">Formulario y WhatsApp integrados</div></div>
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">Cita online conectada a tu agenda real</div></div>
+          <div class="pipe-item"><div class="pipe-dot"></div><div class="pipe-item-text">Rápida en móvil, visible en Google</div></div>
+        </div>
+        <span class="pipe-tag">ADICIONAL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ ANTES / PREMEDITADO -->
+<section id="comparacion">
+  <div class="wrap">
+    <div class="comp-header">
+      <span class="sec-label up">Diferencia real</span>
+      <h2 class="sec-h2 up">El mismo proceso.<br>Con y sin sistema.</h2>
+      <p class="sec-p up" style="max-width:100%;margin-bottom:0">Gestionar la llegada de un cliente nuevo. Algo que pasa varias veces al día en cualquier negocio.</p>
+    </div>
+
+    <div class="comp-wrap up">
+      <!-- ANTES -->
+      <div class="comp-col antes">
+        <div class="comp-head">
+          <span class="comp-head-label">Sin PreMeditado</span>
+          <span class="comp-head-badge">Manual</span>
+        </div>
+        <div class="comp-steps">
+          <div class="comp-step">
+            <div class="cstep-circle">1</div>
+            <div class="cstep-body">
+              <div class="cstep-t">Cliente escribe por Instagram</div>
+              <div class="cstep-s">Notificación entre 30 notificaciones más. Puede que no se vea.</div>
+              <span class="cstep-chip chip-warn">⚠ Riesgo de no verse</span>
+            </div>
+          </div>
+          <div class="comp-step">
+            <div class="cstep-circle">2</div>
+            <div class="cstep-body">
+              <div class="cstep-t">Respuesta al día siguiente</div>
+              <div class="cstep-s">Si se acuerda. Si tiene tiempo. Si ve la notificación.</div>
+              <span class="cstep-chip chip-warn">⚠ Cliente ya fue a otro sitio</span>
+            </div>
+          </div>
+          <div class="comp-step">
+            <div class="cstep-circle">3</div>
+            <div class="cstep-body">
+              <div class="cstep-t">Ida y vuelta por mensajes</div>
+              <div class="cstep-s">Qué día, qué hora, cuánto cuesta, si hay disponibilidad…</div>
+            </div>
+          </div>
+          <div class="comp-step">
+            <div class="cstep-circle">4</div>
+            <div class="cstep-body">
+              <div class="cstep-t">Anotado a mano en la agenda</div>
+              <div class="cstep-s">En papel, en el móvil o en la memoria. Sin confirmación al cliente.</div>
+              <span class="cstep-chip chip-warn">⚠ Error humano probable</span>
+            </div>
+          </div>
+          <div class="comp-step">
+            <div class="cstep-circle">5</div>
+            <div class="cstep-body">
+              <div class="cstep-t">Sin recordatorio</div>
+              <div class="cstep-s">El cliente no viene. El hueco se pierde. El dinero también.</div>
+              <span class="cstep-chip chip-warn">⚠ No-show habitual</span>
+            </div>
+          </div>
+        </div>
+        <div class="comp-stat">
+          <div class="stat-big">~45 min</div>
+          <div class="stat-desc">de gestión manual<br>por cita, en un proceso típico</div>
+        </div>
+      </div>
+
+      <!-- DIVIDER -->
+      <div class="comp-mid">
+        <div class="comp-vs">vs</div>
+      </div>
+
+      <!-- PREMEDITADO -->
+      <div class="comp-col despues">
+        <div class="comp-head">
+          <span class="comp-head-label">Con PreMeditado</span>
+          <span class="comp-head-badge">Automático</span>
+        </div>
+        <div class="comp-steps">
+          <div class="comp-step">
+            <div class="cstep-circle">1</div>
+            <div class="cstep-body">
+              <div class="cstep-t">Cliente escribe por Instagram</div>
+              <div class="cstep-s">Respuesta automática en menos de 30 segundos. Sin importar la hora.</div>
+              <span class="cstep-chip chip-ok">✓ Respuesta inmediata</span>
+            </div>
+          </div>
+          <div class="comp-step">
+            <div class="cstep-circle">2</div>
+            <div class="cstep-body">
+              <div class="cstep-t">El sistema cualifica</div>
+              <div class="cstep-s">Qué servicio quiere, cuándo puede venir, si es primera visita.</div>
+              <span class="cstep-chip chip-ok">✓ Sin intervención</span>
+            </div>
+          </div>
+          <div class="comp-step">
+            <div class="cstep-circle">3</div>
+            <div class="cstep-body">
+              <div class="cstep-t">Ofrece disponibilidad real</div>
+              <div class="cstep-s">Conectado a tu agenda. Sin dobles reservas. Sin llamadas.</div>
+            </div>
+          </div>
+          <div class="comp-step">
+            <div class="cstep-circle">4</div>
+            <div class="cstep-body">
+              <div class="cstep-t">Cita confirmada y guardada</div>
+              <div class="cstep-s">En tu calendario con los datos del cliente. Confirmación automática.</div>
+              <span class="cstep-chip chip-ok">✓ Sin errores</span>
+            </div>
+          </div>
+          <div class="comp-step">
+            <div class="cstep-circle">5</div>
+            <div class="cstep-body">
+              <div class="cstep-t">Recordatorio automático</div>
+              <div class="cstep-s">24h antes. Sin que tengas que recordarlo tú.</div>
+              <span class="cstep-chip chip-ok">✓ Cliente avisado</span>
+            </div>
+          </div>
+        </div>
+        <div class="comp-stat">
+          <div class="stat-big">0 min</div>
+          <div class="stat-desc">de gestión manual.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ ENFOQUE TRANSVERSAL -->
+<section id="enfoque">
+  <div class="wrap">
+    <div class="enfoque-grid">
+      <div class="enfoque-text">
+        <span class="sec-label up">Cómo lo hacemos</span>
+        <h2 class="sec-h2 up">Cada negocio tiene<br>su propia forma de trabajar.</h2>
+        <p class="sec-p up">No automatizamos por automatizar. Primero entendemos cómo funciona tu negocio, detectamos dónde se pierde tiempo y diseñamos una solución adaptada a ti, no a una plantilla genérica.</p>
+        <div class="enfoque-bullets">
+          <div class="e-bullet up d1">
+            <div class="e-bullet-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            <div class="e-bullet-body">
+              <div class="e-bullet-t">Diagnóstico antes de proponer nada</div>
+              <div class="e-bullet-s">Dedicamos tiempo a entender tu negocio antes de tocar ninguna herramienta.</div>
+            </div>
+          </div>
+          <div class="e-bullet up d2">
+            <div class="e-bullet-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+            <div class="e-bullet-body">
+              <div class="e-bullet-t">Soluciones que encajan, no que se adaptan</div>
+              <div class="e-bullet-s">Cada sistema se configura desde cero para el negocio concreto que tenemos delante.</div>
+            </div>
+          </div>
+          <div class="e-bullet up d3">
+            <div class="e-bullet-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+            <div class="e-bullet-body">
+              <div class="e-bullet-t">Automatizamos lo que tiene sentido</div>
+              <div class="e-bullet-s">No todo hay que automatizar. Primero vemos dónde de verdad se gana tiempo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diagnostic audit card -->
+      <div class="up d2">
+        <div class="diag-card">
+          <div class="diag-head">
+            <div class="diag-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(233,221,200,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            <div class="diag-head-text">
+              <div class="diag-head-title">¿Dónde se está escapando tu tiempo?</div>
+              <div class="diag-head-sub">Cuatro preguntas rápidas</div>
+            </div>
+          </div>
+          <div class="diag-body">
+            <div class="diag-row">
+              <div class="diag-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+              <div class="diag-row-body">
+                <div class="diag-row-label">Mensajes</div>
+                <div class="diag-row-sub">¿Cuánto tardas en responder a un cliente nuevo?</div>
+              </div>
+            </div>
+            <div class="diag-row">
+              <div class="diag-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+              <div class="diag-row-body">
+                <div class="diag-row-label">Citas</div>
+                <div class="diag-row-sub">¿Cuánto haces manualmente para cerrar una reserva?</div>
+              </div>
+            </div>
+            <div class="diag-row">
+              <div class="diag-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+              <div class="diag-row-body">
+                <div class="diag-row-label">Seguimientos</div>
+                <div class="diag-row-sub">¿Cuántos clientes se quedan sin respuesta?</div>
+              </div>
+            </div>
+            <div class="diag-row">
+              <div class="diag-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+              <div class="diag-row-body">
+                <div class="diag-row-label">Tareas repetitivas</div>
+                <div class="diag-row-sub">¿Qué haces cada día que podría hacer un sistema?</div>
+              </div>
+            </div>
+          </div>
+          <div class="diag-footer">
+            <div class="diag-footer-text">Diagnóstico gratuito · 30 minutos</div>
+            <a href="mailto:hola@premeditado.es" class="diag-footer-btn">Solicitar →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ PROCESO -->
+<section id="proceso">
+  <div class="wrap">
+    <span class="sec-label up">El proceso</span>
+    <h2 class="sec-h2 up">Cómo lo hacemos.</h2>
+    <p class="sec-p up">Un proceso claro y sin sorpresas. Primero entendemos, después decidimos qué tiene sentido, y solo entonces ponemos manos a la obra.</p>
+    <div class="proceso-track">
+      <div class="proceso-step up">
+        <div class="pstep-num-wrap">01</div>
+        <div class="pstep-title">Entendemos</div>
+        <div class="pstep-desc">Conocemos cómo funciona tu negocio. 30 minutos para ver cómo trabajas, qué haces a mano y dónde sientes que algo falla. Sin compromiso.</div>
+        <div class="pstep-detail">Sin coste</div>
+      </div>
+      <div class="proceso-step up d1">
+        <div class="pstep-num-wrap">02</div>
+        <div class="pstep-title">Detectamos</div>
+        <div class="pstep-desc">Encontramos tareas repetitivas, pérdidas de tiempo y oportunidades de mejora. Solo proponemos lo que de verdad tiene sentido.</div>
+        <div class="pstep-detail">~3 días</div>
+      </div>
+      <div class="proceso-step up d2">
+        <div class="pstep-num-wrap">03</div>
+        <div class="pstep-title">Diseñamos</div>
+        <div class="pstep-desc">Decidimos qué automatizar y cómo. Nos encargamos de la parte técnica. Tú nos explicas cómo trabajas y qué quieres mejorar.</div>
+        <div class="pstep-detail">A medida</div>
+      </div>
+      <div class="proceso-step up d3">
+        <div class="pstep-num-wrap">04</div>
+        <div class="pstep-title">Ponemos en marcha</div>
+        <div class="pstep-desc">Construimos, conectamos y probamos el sistema. Seguimos de cerca las primeras semanas y ajustamos lo que haga falta.</div>
+        <div class="pstep-detail">Seguimiento incluido</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ WEB -->
+<section id="web">
+  <div class="wrap">
+    <div class="web-grid">
+      <div>
+        <span class="sec-label up">Servicio adicional</span>
+        <h2 class="sec-h2 up">Una web que no solo<br>informa. También trabaja.</h2>
+        <p class="sec-p up" style="margin-bottom:0">No es solo una página bonita. Es una pieza del sistema: puede captar contactos, resolver dudas, llevar a WhatsApp, recibir solicitudes y conectarse con el resto de tus automatizaciones.</p>
+        <div class="web-features">
+          <div class="wfeat up d1">
+            <div class="wfeat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+            <div>
+              <div class="wfeat-t">Diseño limpio y profesional</div>
+              <div class="wfeat-s">Sin plantillas genéricas. Adaptada a tu negocio y a tus clientes.</div>
+            </div>
+          </div>
+          <div class="wfeat up d2">
+            <div class="wfeat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+            <div>
+              <div class="wfeat-t">Carga rápida, visible en Google</div>
+              <div class="wfeat-s">Optimizada para móvil. Los clientes no esperan y Google la encuentra.</div>
+            </div>
+          </div>
+          <div class="wfeat up d3">
+            <div class="wfeat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+            <div>
+              <div class="wfeat-t">Integrada con tus sistemas</div>
+              <div class="wfeat-s">WhatsApp, citas, formulario. Todo conectado. Nada manual.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="up d2" style="position:relative">
+        <div class="bmock">
+          <div class="bmock-bar">
+            <div class="bmock-dots"><span></span><span></span><span></span></div>
+            <div class="bmock-url">tuempresa.es</div>
+          </div>
+          <div class="bmock-body">
+            <div class="bm-hero-area">
+              <div class="bm-line w65"></div>
+              <div class="bm-line w45"></div>
+              <div class="bm-line w80"></div>
+              <div class="bm-buttons">
+                <div class="bm-btn"></div>
+                <div class="bm-btn ghost"></div>
+              </div>
+            </div>
+            <div class="bm-grid">
+              <div class="bm-card"><div class="bm-card-dot"></div><div class="bm-card-l"></div><div class="bm-card-l s"></div></div>
+              <div class="bm-card"><div class="bm-card-dot"></div><div class="bm-card-l"></div><div class="bm-card-l s"></div></div>
+              <div class="bm-card"><div class="bm-card-dot"></div><div class="bm-card-l"></div><div class="bm-card-l s"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ CTA FINAL -->
+<section id="final">
+  <div class="wrap">
+    <div class="final-inner">
+      <p class="final-lede up">Empezamos cuando quieras</p>
+      <h2 class="final-h2 up">¿Qué proceso de tu negocio<br>te gustaría no hacer más?</h2>
+      <p class="final-p up">Cuéntanos qué haces manualmente, qué te quita tiempo o dónde sientes que estás perdiendo oportunidades. Analizamos tu caso y te decimos qué tiene sentido automatizar y qué no.</p>
+      <div class="final-btns up">
+        <a href="mailto:hola@premeditado.es" class="cta-fill">Cuéntanos tu proyecto <span class="arr">→</span></a>
+        <a href="mailto:hola@premeditado.es" class="cta-ghost">Hablemos →</a>
+      </div>
+      <p class="final-note up">Diagnóstico gratuito · Sin permanencia · Respuesta en 24 h</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand">PREMEDITADO</div>
+        <div class="foot-tagline">Digitalización y automatización para negocios.</div>
+      </div>
+      <ul class="foot-links">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#comparacion">Diferencia</a></li>
+        <li><a href="#proceso">Proceso</a></li>
+        <li><a href="#web">Web</a></li>
+        <li><a href="mailto:hola@premeditado.es">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="foot-copy">© 2026 PreMeditado. Todos los derechos reservados.</div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.up').forEach(el => io.observe(el));
+
+// Nav on scroll
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 50), { passive: true });
+</script>
+
+</body></html>
