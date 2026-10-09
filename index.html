@@ -977,6 +977,113 @@ footer {
   .final-btns { flex-direction: column; align-items: center }
   .hero-h1 { font-size: 2.2rem }
 }
+
+/* ══════════════════════════════════════
+   MOBILE — 768px y menor
+══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Base font & wrap */
+  html { font-size: 17px }
+  .wrap { padding: 0 16px }
+
+  /* Nav: hide links, keep brand + CTA */
+  .nav-links { display: none }
+  .nav-row { height: 56px }
+  .nav-btn { padding: 8px 16px; font-size: .8rem }
+
+  /* Hero */
+  #hero { padding: 96px 0 56px }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .hero-lede { font-size: .72rem }
+  .hero-h1 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+    line-height: 1.1;
+  }
+  .hero-p { font-size: .95rem; margin-bottom: 32px }
+  .hero-widget { max-width: 100% }
+
+  /* Section headings & padding */
+  #problema,
+  #enfoque,
+  #web { padding: 72px 0 }
+  #servicios,
+  #comparacion,
+  #proceso { padding: 72px 0 }
+  #final { padding: 88px 0 }
+
+  .sec-h2 { font-size: clamp(1.6rem, 6.5vw, 2.2rem) }
+  .sec-p { font-size: .95rem; margin-bottom: 36px }
+
+  /* El Contexto — prob-tape: force 1 column */
+  .prob-tape {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .prob-item { padding: 22px 20px }
+  .prob-titulo { font-size: 1rem }
+  .prob-texto { font-size: .9rem }
+
+  /* Servicios pipeline — 1 column, no arrows */
+  .pipeline {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .pipe-arrow { display: none }
+  .pipe-col { width: 100% }
+  .pipe-head { padding: 22px 20px 18px }
+  .pipe-title { font-size: 1rem }
+  .pipe-sub { font-size: .88rem }
+  .pipe-items { padding: 16px 20px 20px }
+  .pipe-item-text { font-size: .88rem }
+  .pipe-tag { margin: 0 20px 16px }
+
+  /* Comparación — already stacks at 960px; tighten padding */
+  .comp-head { padding: 18px 20px 14px }
+  .comp-steps { padding: 16px 20px }
+  .comp-stat { padding: 14px 20px 18px }
+  .stat-big { font-size: 2rem }
+  .cstep-t { font-size: .92rem }
+  .cstep-s { font-size: .84rem }
+
+  /* Enfoque grid — 1 column */
+  .enfoque-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .e-bullet-t { font-size: .95rem }
+  .e-bullet-s { font-size: .88rem }
+
+  /* Proceso track — 1 column */
+  .proceso-track {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .proceso-track::before { display: none }
+  .proceso-step { padding: 0 }
+  .pstep-title { font-size: 1rem }
+  .pstep-desc { font-size: .88rem }
+
+  /* Web grid — 1 column */
+  .web-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .wfeat-t { font-size: .95rem }
+  .wfeat-s { font-size: .88rem }
+
+  /* Final CTA */
+  .final-h2 { font-size: clamp(1.7rem, 7vw, 2.6rem) }
+  .final-p { font-size: .92rem }
+  .final-btns { flex-direction: column; align-items: center }
+
+  /* Footer */
+  .foot-top { flex-direction: column; gap: 20px }
+  .foot-links { gap: 16px }
+  .foot-links a { font-size: .85rem }
+}
 </style>
 
 <!-- ══════════════════════════════════ NAV -->
